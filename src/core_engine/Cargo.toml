@@ -1,0 +1,32 @@
+[package]
+name = "core_engine"
+version = "0.1.0"
+edition = "2021"
+
+# C ABI로 노출되는 동적 라이브러리(.dll). C#에서 P/Invoke로 호출한다.
+# rlib도 포함해 내부 헬퍼 바이너리(src/bin/appcleaner_helper.rs)가 lib를 쓸 수 있게 한다.
+[lib]
+name = "core_engine"
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+# Windows 레지스트리 접근 (설치 앱 스캐너)
+winreg = "0.52"
+# JSON 직렬화 (C#과 데이터 교환)
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+# 잔여물 파일/폴더를 휴지통으로 이동 (영구삭제 아님 — 복구 가능)
+trash = "5"
+# 백업/복원: tar로 묶고 zstd로 압축 (.appbak)
+tar = "0.4"
+zstd = "0.13"
+# manifest 생성 시각
+chrono = { version = "0.4", default-features = false, features = ["clock", "std"] }
+# 언인스톨러를 ShellExecute("runas")로 실행 → 필요 시 UAC 승격
+windows = { version = "0.56", features = [
+    "Win32_UI_Shell",
+    "Win32_UI_WindowsAndMessaging",
+    "Win32_Foundation",
+    "Win32_System_Threading",
+    "Win32_System_Registry",
+] }

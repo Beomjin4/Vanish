@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentDialog
+    x:Class="AppCleaner_UI.Views.ResidueDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:models="using:AppCleaner_UI.Models"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="잔여물 정리"
+    PrimaryButtonText="선택 항목 삭제"
+    CloseButtonText="건너뛰기"
+    DefaultButton="Close">
+
+    <Grid Width="520" RowSpacing="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" TextWrapping="Wrap"
+                   Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+            제거 후 남은 항목입니다. <Run FontWeight="SemiBold">체크한 항목만</Run> 삭제되며,
+            폴더는 <Run FontWeight="SemiBold">휴지통</Run>으로 이동합니다(복구 가능).
+            다른 앱과 공유하는 폴더일 수 있으니 경로를 확인하세요.
+        </TextBlock>
+
+        <CheckBox Grid.Row="1" x:Name="SelectAllBox" Content="전체 선택"
+                  Checked="OnSelectAllChanged" Unchecked="OnSelectAllChanged" />
+
+        <Border Grid.Row="2"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1" CornerRadius="6" MaxHeight="320">
+            <ListView x:Name="ItemsList" SelectionMode="None" Padding="4">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:ResidueItem">
+                        <CheckBox IsChecked="{x:Bind IsSelected, Mode=TwoWay}" Margin="0,2">
+                            <StackPanel Spacing="2">
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <Border Background="{ThemeResource AccentFillColorDefaultBrush}"
+                                            CornerRadius="4" Padding="6,1">
+                                        <TextBlock Text="{x:Bind KindLabel}" FontSize="11"
+                                                   Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}" />
+                                    </Border>
+                                    <TextBlock Text="{x:Bind SizeDisplay}" FontSize="12"
+                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                               VerticalAlignment="Center" />
+                                </StackPanel>
+                                <TextBlock Text="{x:Bind Path}" TextWrapping="Wrap"
+                                           FontSize="13" />
+                            </StackPanel>
+                        </CheckBox>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Border>
+    </Grid>
+</ContentDialog>

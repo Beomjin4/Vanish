@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "AppCleaner.UI (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "AppCleaner.UI (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

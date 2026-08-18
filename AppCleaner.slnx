@@ -1,0 +1,5 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/AppCleaner.UI/AppCleaner.UI.csproj" />
+  </Folder>
+</Solution>
